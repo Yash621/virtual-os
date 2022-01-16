@@ -4,6 +4,8 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
+	"github.com/Knetic/govaluate"
+	"strconv"
 )
 
 func main() {
@@ -14,7 +16,12 @@ func main() {
 	historyBtn := widget.NewButton("History", func() {
 		w.SetContent(widget.NewLabel("history"))
 	})
-	backBtn := widget.NewButton("Back", func() {})
+	backBtn := widget.NewButton("Back", func() {
+		if output != "" {
+			output = output[:len(output)-1]
+			input.SetText(output)
+		}
+	})
 	clearBtn := widget.NewButton("Clear", func() {
 		output = ""
 		input.SetText(output)
@@ -88,8 +95,20 @@ func main() {
 		input.SetText(output)
 	})
 	equalsBtn := widget.NewButton("=", func() {
-		output += "="
-		input.SetText(output)
+		expression, err := govaluate.NewEvaluableExpression(output)
+		if err != nil {
+			output = "Incorrect Expression Please try again"
+			input.SetText(output)
+		} else {
+			result, err := expression.Evaluate(nil)
+			if err != nil {
+				output = "Error"
+			} else {
+				output = strconv.FormatFloat(result.(float64), 'f', -1, 64)
+			}
+			input.SetText(output)
+		}
+
 	})
 
 	w.SetContent(container.NewVBox(input, container.NewGridWithColumns(1,
