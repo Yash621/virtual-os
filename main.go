@@ -13,8 +13,22 @@ func main() {
 	w := a.NewWindow("Hello World")
 	input := widget.NewLabel("")
 	output := ""
+	historyStr := ""
+	var historyArr []string
+	ans := ""
+	history := widget.NewLabel(historyStr)
+	isHistory := true
 	historyBtn := widget.NewButton("History", func() {
-		w.SetContent(widget.NewLabel("history"))
+		if isHistory {
+			historyStr = ""
+		} else {
+			for i := len(historyArr) - 1; i >= 0; i-- {
+				historyStr += historyArr[i] + "\n"
+			}
+
+		}
+		isHistory = !isHistory
+		history.SetText(historyStr)
 	})
 	backBtn := widget.NewButton("Back", func() {
 		if output != "" {
@@ -104,14 +118,16 @@ func main() {
 			if err != nil {
 				output = "Error"
 			} else {
-				output = strconv.FormatFloat(result.(float64), 'f', -1, 64)
+				ans = strconv.FormatFloat(result.(float64), 'f', -1, 64)
+				historyArr = append(historyArr, output+"="+ans)
+				output = ans
 			}
 			input.SetText(output)
 		}
 
 	})
 
-	w.SetContent(container.NewVBox(input, container.NewGridWithColumns(1,
+	w.SetContent(container.NewVBox(input, history, container.NewGridWithColumns(1,
 		container.NewGridWithColumns(2, historyBtn, backBtn),
 		container.NewGridWithColumns(4, clearBtn, openBtn, closeBtn, divideBtn),
 		container.NewGridWithColumns(4, nineBtn, eightBtn, sevenBtn, multiplyBtn),
