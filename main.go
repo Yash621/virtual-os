@@ -9,31 +9,90 @@ import (
 func main() {
 	a := app.New()
 	w := a.NewWindow("Hello World")
+	input := widget.NewLabel("")
+	output := ""
 	historyBtn := widget.NewButton("History", func() {
 		w.SetContent(widget.NewLabel("history"))
 	})
 	backBtn := widget.NewButton("Back", func() {})
-	clearBtn := widget.NewButton("Clear", func() {})
-	openBtn := widget.NewButton("(", func() {})
-	closeBtn := widget.NewButton(")", func() {})
-	divideBtn := widget.NewButton("/", func() {})
-	sevenBtn := widget.NewButton("7", func() {})
-	eightBtn := widget.NewButton("8", func() {})
-	nineBtn := widget.NewButton("9", func() {})
-	multiplyBtn := widget.NewButton("*", func() {})
-	fourBtn := widget.NewButton("4", func() {})
-	fiveBtn := widget.NewButton("5", func() {})
-	sixBtn := widget.NewButton("6", func() {})
-	subtractBtn := widget.NewButton("-", func() {})
-	oneBtn := widget.NewButton("1", func() {})
-	twoBtn := widget.NewButton("2", func() {})
-	threeBtn := widget.NewButton("3", func() {})
-	addBtn := widget.NewButton("+", func() {})
-	zeroBtn := widget.NewButton("0", func() {})
-	decimalBtn := widget.NewButton(".", func() {})
-	equalsBtn := widget.NewButton("=", func() {})
-	hello := widget.NewLabel("Hello")
-	w.SetContent(container.NewVBox(hello, container.NewGridWithColumns(1,
+	clearBtn := widget.NewButton("Clear", func() {
+		output = ""
+		input.SetText(output)
+	})
+	openBtn := widget.NewButton("(", func() {
+		output += "("
+		input.SetText(output)
+	})
+	closeBtn := widget.NewButton(")", func() {
+		output += ")"
+		input.SetText(output)
+	})
+	divideBtn := widget.NewButton("/", func() {
+		output += "/"
+		input.SetText(output)
+	})
+	sevenBtn := widget.NewButton("7", func() {
+		output += "7"
+		input.SetText(output)
+	})
+	eightBtn := widget.NewButton("8", func() {
+		output += "8"
+		input.SetText(output)
+	})
+	nineBtn := widget.NewButton("9", func() {
+		output += "9"
+		input.SetText(output)
+	})
+	multiplyBtn := widget.NewButton("*", func() {
+		output += "*"
+		input.SetText(output)
+	})
+	fourBtn := widget.NewButton("4", func() {
+		output += "4"
+		input.SetText(output)
+	})
+	fiveBtn := widget.NewButton("5", func() {
+		output += "5"
+		input.SetText(output)
+	})
+	sixBtn := widget.NewButton("6", func() {
+		output += "6"
+		input.SetText(output)
+	})
+	subtractBtn := widget.NewButton("-", func() {
+		output += "-"
+		input.SetText(output)
+	})
+	oneBtn := widget.NewButton("1", func() {
+		output += "1"
+		input.SetText(output)
+	})
+	twoBtn := widget.NewButton("2", func() {
+		output += "2"
+		input.SetText(output)
+	})
+	threeBtn := widget.NewButton("3", func() {
+		output += "3"
+		input.SetText(output)
+	})
+	addBtn := widget.NewButton("+", func() {
+		output += "+"
+		input.SetText(output)
+	})
+	zeroBtn := widget.NewButton("0", func() {
+		output += "0"
+		input.SetText(output)
+	})
+	decimalBtn := widget.NewButton(".", func() {
+		output += "."
+		input.SetText(output)
+	})
+	equalsBtn := widget.NewButton("=", func() {
+		output += "="
+		input.SetText(output)
+	})
+
+	w.SetContent(container.NewVBox(input, container.NewGridWithColumns(1,
 		container.NewGridWithColumns(2, historyBtn, backBtn),
 		container.NewGridWithColumns(4, clearBtn, openBtn, closeBtn, divideBtn),
 		container.NewGridWithColumns(4, nineBtn, eightBtn, sevenBtn, multiplyBtn),
